@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="jrails.ModelTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-11-18T17:12:24" hostname="DARKHOLD" time="0.033">
+  <properties/>
+  <testcase name="testAll" classname="jrails.ModelTest" time="0.026"/>
+  <testcase name="testSaveAndFind" classname="jrails.ModelTest" time="0.002"/>
+  <testcase name="testDestroy" classname="jrails.ModelTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

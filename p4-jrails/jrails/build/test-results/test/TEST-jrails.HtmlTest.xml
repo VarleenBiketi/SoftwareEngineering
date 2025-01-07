@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="jrails.HtmlTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2024-11-18T17:12:24" hostname="DARKHOLD" time="0.016">
+  <properties/>
+  <testcase name="testNestedTags" classname="jrails.HtmlTest" time="0.007"/>
+  <testcase name="testForm" classname="jrails.HtmlTest" time="0.0"/>
+  <testcase name="testEmptyHtml" classname="jrails.HtmlTest" time="0.0"/>
+  <testcase name="testSelfClosingTag" classname="jrails.HtmlTest" time="0.0"/>
+  <testcase name="testTextContent" classname="jrails.HtmlTest" time="0.0"/>
+  <testcase name="testParagraphTag" classname="jrails.HtmlTest" time="0.0"/>
+  <testcase name="testSequentialHtml" classname="jrails.HtmlTest" time="0.001"/>
+  <testcase name="testMultipleTags" classname="jrails.HtmlTest" time="0.0"/>
+  <testcase name="testLinkTo" classname="jrails.HtmlTest" time="0.0"/>
+  <testcase name="testSubmitButton" classname="jrails.HtmlTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
