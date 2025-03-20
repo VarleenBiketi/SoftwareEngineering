@@ -1,0 +1,54 @@
+In this project, the focus was on implementing a custom testing framework that mimics JUnit and extends it with randomized property-based testing similar to QuickCheck. Here’s a breakdown of what was done:
+
+### Part 1: Implementing JUnit
+
+The first task was to create a custom testing framework that could execute test cases annotated with `@Test`, as well as setup and teardown methods annotated with `@Before`, `@BeforeClass`, `@After`, and `@AfterClass`. The framework provides the following features:
+
+1. **Test Execution Engine**: 
+   - The `testClass(String name)` method was implemented in the `Unit` class to run all the test cases in a given class. It uses reflection to identify methods annotated with `@Test` and executes them in alphabetical order.
+   - Before any tests are run, the `@BeforeClass` methods are executed (if present), followed by the `@Before` methods for each test case. After each test, the `@After` methods are executed, and after all tests, the `@AfterClass` methods are executed.
+   - Methods with multiple annotations (e.g., `@Test` and `@BeforeClass`) were flagged as invalid, and an exception is thrown if any are found.
+
+2. **Exception Handling**: 
+   - The framework catches exceptions thrown by test methods and records them in a map, where the keys are test case names and the values are either the exceptions thrown or `null` if the test passes.
+   - The framework makes sure that exceptions thrown from methods annotated with `@Before`, `@BeforeClass`, `@After`, and `@AfterClass` are rethrown after being caught, ensuring that failures in setup or teardown methods are handled properly.
+
+3. **Method Reflection**: 
+   - Java reflection (`java.lang.reflect`) was used extensively to identify and invoke the methods based on their annotations. This allows the test framework to dynamically find methods at runtime and execute them.
+   - Reflection was also used to ensure that methods annotated with `@BeforeClass` and `@AfterClass` are static, as required by the specification.
+
+4. **Method Ordering**: 
+   - The test cases were executed in alphabetical order by the method name using `String.compareTo`, ensuring consistency across runs.
+   
+5. **JUnit Compatibility**: 
+   - The framework supports the essential features of JUnit, including setup and teardown methods, and gives a report of failed test cases.
+
+### Part 2: QuickCheck for JUnit
+
+The second part of the project extended the framework to support random test generation, inspired by the QuickCheck technique from Haskell. The following features were implemented:
+
+1. **QuickCheck Integration**:
+   - The `quickCheckClass(String name)` method was implemented to run property-based tests in a similar manner to `testClass`, but it handles properties defined with the `@Property` annotation.
+   - Each property is executed with different sets of arguments, which are generated based on annotations like `@IntRange`, `@StringSet`, `@ListLength`, and `@ForAll`. The method tests all combinations of these arguments up to 100 times.
+
+2. **Property Annotations**:
+   - Property methods can take arguments annotated with specific annotations to define their types and valid ranges:
+     - `@IntRange(min=i1, max=i2)` defines an integer argument with a specific range.
+     - `@StringSet(strings={...})` defines a string argument with a set of possible values.
+     - `@ListLength(min=i1, max=i2)` defines a list argument with a specific length range.
+     - `@ForAll(name="method", times=i)` specifies that the method `method()` will generate `i` different values for the argument.
+   
+3. **Property Execution**:
+   - Each property is executed for all combinations of valid argument values. For example, if a property has an `@IntRange` argument and a `@StringSet` argument, all combinations of integers and strings are tested.
+   - The property is considered to have failed if it returns `false` or throws any exceptions. The framework records the first failing input and stops further executions for that property.
+
+4. **Randomized Testing**:
+   - The framework does not rely on randomness directly but generates systematic tests based on defined ranges and sets for each argument. The tests are deterministic and will explore all possible valid combinations up to a maximum of 100 test runs.
+
+5. **Failure Reporting**:
+   - When a property fails, the map returned by `quickCheckClass` includes the name of the property and the arguments for which the failure occurred. If no failure is encountered, the map contains `null` for the property.
+
+6. **Edge Cases and Validation**:
+   - The framework checks for invalid annotations (e.g., more than one annotation on a property argument or invalid combinations of annotations) and raises an exception if such cases are found.
+   - The `quickCheckClass` method ensures that the correct types and argument annotations are used, and it throws exceptions if invalid configurations are encountered.
+

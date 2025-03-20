@@ -1,0 +1,34 @@
+In this chess game simulator project, the main focus was on implementing various design patterns and managing the game mechanics. Here's a breakdown of what was done:
+
+The program simulates a chess game by reading the initial board configuration and a series of moves from external files. The game logic ensures that pieces are moved according to the standard rules of chess, with some simplifications like omitting check, checkmate, castling, en passant, and pawn promotion.
+
+### Key Design Patterns Implemented:
+1. **Singleton**: The `Board` class was designed as a singleton to ensure that only one instance of the game board exists throughout the game. This was achieved by providing a static method `theBoard()` that returns the single instance of the `Board` class, ensuring consistent access across the application.
+   
+2. **Factory**: A factory pattern was used to instantiate different types of chess pieces. Each type of piece (like Rook, Pawn, Queen, etc.) has a corresponding factory class (e.g., `RookFactory`), which is responsible for creating instances of the corresponding piece. This allows for easier maintenance and potential future extension if new pieces are added.
+
+3. **Observer**: The board class implements the observer pattern to allow listeners to track and react to game events. For example, when a move is made or a piece is captured, registered listeners are notified via methods like `onMove()` and `onCapture()`. This makes it easy to handle events such as printing the game state or triggering other reactions.
+
+4. **Internal Iterator**: The `Board` class supports an internal iteration pattern, where it can iterate over all the squares on the board using an internal iterator. This allows actions to be performed on each piece or empty square, like printing the board state, without exposing the underlying data structure directly.
+
+### Chess Mechanics:
+The game board was set up with an 8x8 grid, and pieces were placed in their initial positions according to the rules of chess. The pieces' movements are modeled based on simplified chess rules. Each piece (King, Queen, Rook, etc.) has its own movement logic, which is checked every time a move is made.
+
+- **Movement and Validity Checks**: When a move is made, the program checks if the move is valid for the selected piece. If the move is invalid (e.g., the destination is occupied by a piece of the same color or the piece's movement doesn’t match its rules), an exception is thrown.
+  
+- **Piece Capturing**: When a move results in a piece landing on an occupied square, the piece at the destination is captured (removed from the board).
+
+### File Parsing:
+The game takes input from two files: one for the initial layout of the board and another for the sequence of moves. The layout file defines the starting positions of all pieces using a specific format (e.g., `a1=wp` for a white pawn at a1). The moves file specifies the series of moves, with each move given in standard chess notation (e.g., `a2-a3` for moving a piece from a2 to a3).
+
+### Error Handling:
+During file parsing, the program enforces rules such as:
+- No two pieces can occupy the same position.
+- Moves must be valid according to the simplified chess rules.
+
+Exceptions are thrown when invalid moves or layout configurations are encountered.
+
+### Testing:
+A separate test file was provided to help verify the implementation. The test checks various aspects of the program, including the validity of piece movements and the behavior of the observer when moves are made or pieces are captured. Custom tests were written to ensure the functionality of the pieces' `moves()` methods.
+
+In summary, this chess simulator integrates multiple design patterns to manage the game state, piece behaviors, and handle events effectively. By using a combination of Singleton, Factory, Observer, and Iterator patterns, the project was able to meet the goals of simulating a game of chess and gaining hands-on experience with these design patterns.

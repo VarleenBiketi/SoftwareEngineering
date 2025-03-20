@@ -1,0 +1,76 @@
+This project you will implements a web server that uses a model-view-controller architecture. 
+We'll call the system jrails, because it uses ideas from Ruby on RailsLinks to an external site.
+ However, because Java is, well, Java, the framework will be noticeably cruftier than Rails. 
+
+The implementation follows the **Model-View-Controller (MVC)** pattern, 
+which organizes the application into three primary components: Models, Views, and 
+Controllers, along with a Router and HTTP Server to manage the request/response cycle.
+
+### 1. **Model (jrails.Model)**
+The **Model** represents the data layer and is responsible for storing, retrieving, 
+and manipulating data. It is designed to interact with a simulated database, 
+which is a file in this case. The Model has the following key characteristics:
+
+- **Fields Annotated with @Column:** These fields map to columns in the database 
+(or file). For instance, in a `Book` model, fields like `title`, `author`, and `num_copies` 
+are annotated with `@Column` to represent columns in the `Book` table.
+
+- **Database Persistence:** The `save()` method ensures that changes to a model 
+are persisted to the file. If the model has an ID of `0`, it is treated as a new 
+record and added to the file. If the ID is non-zero, the corresponding record in 
+the file is updated.
+
+- **CRUD Operations:** The Model supports basic **CRUD** (Create, Read, Update, Delete) operations:
+  - **save():** Adds or updates the record in the database.
+  - **findById(id):** Retrieves a record based on its ID.
+  - **delete(id):** Deletes a record based on its ID.
+
+### 2. **View (jrails.View)**
+The **View** is responsible for rendering the data in a format suitable for 
+the client. It receives the data from the controller and formats it as HTML, 
+JSON, or any other relevant format for the client to interpret. The 
+View is also responsible for presenting the data in a user-friendly way.
+
+- **Rendering Templates:** The View takes the data provided by the Controller 
+and uses templates to render HTML pages, which are then sent to the client's browser.
+- **Flexible Output Formats:** Depending on the request, the View can render 
+different formats like HTML for regular web pages or JSON for API responses.
+
+### 3. **Controller (jrails.Controller)**
+The **Controller** acts as an intermediary between the Model and the View. It 
+processes user input, interacts with the model to fetch or modify data, and then 
+determines which view should be rendered.
+
+- **Action Methods:** The controller defines various action methods 
+(like `show()`, `create()`, `update()`, `delete()`) that correspond to different 
+routes and actions in the application.
+- **Handling Requests:** The controller processes incoming HTTP requests, 
+manipulates data via the model, and passes the appropriate data to the view for rendering.
+
+### 4. **Router (jrails.Router)**
+The **Router** is responsible for mapping HTTP requests (URLs) to specific controller
+ actions. It maintains a routing table where each URL pattern is mapped to a specific 
+ controller and action.
+
+- **Routing Table:** The Router reads the incoming URL and matches it to an entry 
+in the routing table. If a match is found, the corresponding controller action is invoked.
+- **Flexible Routing:** The Router supports both static and dynamic routing, allowing 
+for parameters in the URL (e.g., `/books/:id`) to be passed to the controller's action method.
+
+### 5. **HTTP Server**
+The **HTTP Server** listens for incoming HTTP requests and routes them to the appropriate 
+controller actions. It processes the requests, interacts with the Router to find the 
+matching route, and then forwards the request to the Controller for further handling.
+
+- **Request Handling:** The server listens on a specified port and processes 
+incoming requests by parsing the URL, headers, and any request body data.
+- **Response Generation:** Once the Controller has finished processing the request, 
+it generates a response (either HTML, JSON, or another format) and sends it back to the client.
+
+### 6. **Jrails Framework**
+The **Jrails** framework provides a minimal structure for building web applications. 
+It incorporates the MVC design pattern and provides essential components such as models, 
+views, controllers, routers, and a built-in HTTP server. The framework is designed 
+to be lightweight and flexible, allowing developers to build web applications with 
+minimal boilerplate code.
+

@@ -1,0 +1,43 @@
+### Summary:
+The project implements a graph with two representations: an adjacency list-based graph 
+and an edge-based graph using an `Edge` class and the `EdgeGraph` interface. 
+It includes various graph operations such as adding/removing nodes and edges, checking for connections, 
+and supporting graph unions and subgraphs. The implementation adapts between the two representations 
+and includes test cases to validate correctness.
+
+---
+
+### Implementation Details:
+
+1. **Adjacency List Graph**:
+   - **Data Structure**: `HashMap<String, LinkedList<String>>` to store nodes and their adjacent nodes.
+   - **Methods**:
+     - **`addNode(String n)`**: Adds a node to the graph.
+     - **`addEdge(String n1, String n2)`**: Adds a directed edge from `n1` to `n2`.
+     - **`hasNode(String n)`**: Checks if a node exists.
+     - **`hasEdge(String n1, String n2)`**: Checks if an edge exists.
+     - **`removeNode(String n)`**: Removes a node and its edges.
+     - **`removeEdge(String n1, String n2)`**: Removes a specific edge.
+     - **`nodes()`**: Returns all nodes.
+     - **`succ(String n)`**: Returns successors (outgoing edges).
+     - **`pred(String n)`**: Returns predecessors (incoming edges).
+     - **`union(Graph g)`**: Merges another graph.
+     - **`subGraph(Set<String> nodes)`**: Returns a subgraph.
+     - **`connected(String n1, String n2)`**: Checks for a path between nodes.
+
+2. **Edge Class and EdgeGraph Interface**:
+   - **Edge Class**: Represents a directed edge between two nodes (`src` and `dst`).
+   - **EdgeGraph Interface**: Defines methods for graph operations based on edges:
+     - **`addEdge(Edge e)`**: Adds an edge.
+     - **`hasNode(String n)`**: Checks for node existence.
+     - **`removeEdge(Edge e)`**: Removes an edge.
+     - **`outEdges(String n)`**: Returns outgoing edges.
+     - **`inEdges(String n)`**: Returns incoming edges.
+     - **`union(EdgeGraph g)`**: Merges another edge graph.
+     - **`hasPath(List<Edge> l)`**: Verifies if a path is valid.
+   
+3. **EdgeGraphAdapter**: Adapts the adjacency-list graph to fit the `EdgeGraph` interface, 
+translating operations between the two representations.
+
+4. **Test Case**: Unit tests validate the graph operations, ensuring correctness in 
+adding/removing nodes/edges, checking connections, and performing graph unions and subgraphs.
